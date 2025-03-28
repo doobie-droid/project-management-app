@@ -21,6 +21,8 @@ Route::get('/', function () {
 Route::prefix('projects')->name('projects.')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])->name('index');
     Route::post('/', [ProjectController::class, 'store'])->name('store');
+    Route::get('{project}/edit', [ProjectController::class, 'edit'])->name('edit');
+    Route::put('{project}', [ProjectController::class, 'update'])->name('update');
     Route::delete('{project}', [ProjectController::class, 'destroy'])->name('destroy');
 });
 Route::prefix('tasks')->name('tasks.')->group(function () {

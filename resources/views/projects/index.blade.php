@@ -22,7 +22,12 @@
                         @foreach ($projects as $project)
                             <tr>
                                 <td class="py-2 px-4 border-b">{{ $project->id }}</td>
-                                <td class="py-2 px-4 border-b">{{ $project->name }}</td>
+                                <td class="py-2 px-4 border-b">
+                                    <a href="{{ route('projects.edit', $project) }}"
+                                        class="text-blue-500 hover:text-blue-400">
+                                        {{ $project->name }}
+                                    </a>
+                                </td>
                                 <td class="py-2 px-4 border-b">{{ $project->description }}</td>
                                 <td class="py-2 px-4 border-b">{{ $project->created_at }}</td>
                                 <td class="py-2 px-4 border-b">
