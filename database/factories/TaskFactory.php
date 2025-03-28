@@ -18,7 +18,7 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word(),
+            'name' => ucfirst($this->faker->word()),
             'project_id' => Project::factory()->create(),
             'priority' => random_int(1, 100),
         ];
