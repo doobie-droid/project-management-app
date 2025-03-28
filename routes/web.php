@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('tasks.index'));
+});
+Route::prefix('projects')->name('projects.')->group(function () {
+    Route::get('/', [ProjectController::class, 'index'])->name('index');
+});
+Route::prefix('tasks')->name('tasks.')->group(function () {
+    Route::get('/', [TaskController::class, 'index'])->name('index');
 });
