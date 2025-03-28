@@ -1,30 +1,19 @@
-<!doctype html>
-<html>
+@extends('layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite('resources/css/app.css')
-</head>
-
-<body>
-    @if (session('success'))
-        <div class="mb-4 p-4 bg-green-100 text-green-800 border border-green-300 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
+@section('content')
     <div class="flex justify-center min-h-screen">
-        <div class="w-full sm:w-[80%] bg-gray-200 p-4 flex flex-col items-center ">
+        <div class="w-full sm:w-[80%] bg-gray-200 p-4 flex flex-col items-center">
             <h1 class="text-2xl font-bold mb-4">Project List</h1>
+
             @if ($projects->isEmpty())
                 <p>No projects found</p>
             @else
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead>
-                        <tr class=" text-left">
+                        <tr class="text-left">
                             <th class="py-2 px-4 border-b">ID</th>
                             <th class="py-2 px-4 border-b">Name</th>
-                            <th class="py-2 px-4 border-b">Price</th>
+                            <th class="py-2 px-4 border-b">Description</th>
                             <th class="py-2 px-4 border-b">Created At</th>
                             <th class="py-2 px-4 border-b"></th>
                         </tr>
@@ -51,8 +40,9 @@
                     </tbody>
                 </table>
             @endif
+
             <form action="{{ route('projects.store') }}" method="POST"
-                class="space-y-4 flex justify-start items-center   min-w-full gap-3">
+                class="space-y-4 flex justify-start items-center min-w-full gap-3 mt-6">
                 @csrf
 
                 <div>
@@ -68,19 +58,15 @@
                 </div>
 
                 <div class="self-end">
-                    <button type="submit"
-                        class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500 transition">
+                    <button type="submit" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500 transition">
                         New
                     </button>
                 </div>
             </form>
+
             <div class="mt-4 flex gap-2">
                 {{ $projects->links() }}
             </div>
         </div>
-
     </div>
-
-</body>
-
-</html>
+@endsection
