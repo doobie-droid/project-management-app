@@ -18,13 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect(route('tasks.index'));
 });
-Route::prefix('projects')->name('projects.')->group(function () {
-    Route::get('/', [ProjectController::class, 'index'])->name('index');
-    Route::post('/', [ProjectController::class, 'store'])->name('store');
-    Route::get('{project}/edit', [ProjectController::class, 'edit'])->name('edit');
-    Route::put('{project}', [ProjectController::class, 'update'])->name('update');
-    Route::delete('{project}', [ProjectController::class, 'destroy'])->name('destroy');
-});
+Route::resource('projects', ProjectController::class)->except(['create', 'show']);
+
 Route::prefix('tasks')->name('tasks.')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('index');
 });
