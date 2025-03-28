@@ -26,6 +26,7 @@
                             <th class="py-2 px-4 border-b">Name</th>
                             <th class="py-2 px-4 border-b">Price</th>
                             <th class="py-2 px-4 border-b">Created At</th>
+                            <th class="py-2 px-4 border-b"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,6 +36,16 @@
                                 <td class="py-2 px-4 border-b">{{ $project->name }}</td>
                                 <td class="py-2 px-4 border-b">{{ $project->description }}</td>
                                 <td class="py-2 px-4 border-b">{{ $project->created_at }}</td>
+                                <td class="py-2 px-4 border-b">
+                                    <form action="{{ route('projects.destroy', $project) }}" method="POST"
+                                        onsubmit="return confirm('Send To Trash?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-red-800">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
