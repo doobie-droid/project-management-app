@@ -24,7 +24,7 @@
                                 <td class="py-2 px-4 border-b">{{ $project->id }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <a href="{{ route('projects.edit', $project) }}"
-                                        class="text-blue-500 hover:text-blue-400">
+                                        class="hover:bg-green-100 rounded py-1 px-2 w-full">
                                         {{ $project->name }}
                                     </a>
                                 </td>
@@ -51,20 +51,26 @@
                 @csrf
 
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Project Name</label>
+
                     <input type="text" name="name" id="name"
-                        class="mt-1 block w-full border border-gray-300 rounded p-2" required>
+                        class="mt-1 block w-full border-0 border-black border-b-2 bg-transparent focus:outline-none  p-2"
+                        required autocomplete="off">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Project
+                        Name</label>
                 </div>
 
                 <div>
+                    <input name="description" id="description" rows="1"
+                        class="mt-1 block w-full border-0 border-black border-b-2 bg-transparent focus:outline-none  p-2"></input>
                     <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="description" id="description" rows="1"
-                        class="mt-1 block w-full border border-gray-300 rounded p-2"></textarea>
                 </div>
 
                 <div class="self-end">
-                    <button type="submit" class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-500 transition">
-                        New
+                    <button type="submit" class="bg-green-500 text-white p-2   hover:bg-green-700 rounded-full transition">
+                        <svg class="h-6 w-6 " viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 12H18M12 6V18" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
                     </button>
                 </div>
             </form>
