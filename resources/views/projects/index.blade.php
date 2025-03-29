@@ -3,7 +3,9 @@
 @section('content')
     <div class="flex justify-center min-h-screen">
         <div class="w-full sm:w-[80%] bg-gray-200 p-4 flex flex-col items-center">
-            <h1 class="text-2xl font-bold mb-4">Project List</h1>
+            <div class="flex w-full items-start">
+                <h1 class="text-2xl font-bold mb-4">Project List</h1>
+            </div>
 
             @if ($projects->isEmpty())
                 <p>No projects found</p>

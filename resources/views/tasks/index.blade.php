@@ -2,8 +2,30 @@
 
 @section('content')
     <div class="flex justify-center min-h-screen">
+
         <div class="w-full sm:w-[80%] bg-gray-200 p-4 flex flex-col items-center">
-            <h1 class="text-2xl font-bold mb-4">Task List</h1>
+            <div class="flex gap-4 justify-between items-center w-full">
+
+                <h1 class="text-2xl font-bold mb-4">Task List</h1>
+                <form method="GET" action="{{ route('tasks.index') }}" class="mb-4 place-items-end">
+                    <div class="flex items-center gap-4">
+                        <select name="project_id" id="project_id"
+                            class="tom-select border-0 border-black border-b-2 bg-transparent focus:outline-none p-2">
+                            <option value="">All Projects</option>
+                            @foreach ($projects as $project)
+                                <option value="{{ $project->id }}"
+                                    {{ request('project_id') == $project->id ? 'selected' : '' }}>
+                                    {{ $project->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
+                            Filter
+                        </button>
+                    </div>
+                </form>
+            </div>
 
             @if ($tasks->isEmpty())
                 <p>No tasks found</p>
@@ -13,6 +35,7 @@
                         <tr class="text-left">
                             <th class="py-2 px-4 border-b">ID</th>
                             <th class="py-2 px-4 border-b">Name</th>
+                            <th class="py-2 px-4 border-b">Task</th>
                             <th class="py-2 px-4 border-b">Created At</th>
                             <th class="py-2 px-4 border-b">Updated At At</th>
                             <th class="py-2 px-4 border-b"></th>
@@ -26,6 +49,12 @@
                                     <a href="{{ route('tasks.edit', $task) }}"
                                         class="hover:bg-green-100 rounded py-1 px-2 w-full">
                                         {{ $task->name }}
+                                    </a>
+                                </td>
+                                <td class="py-2 px-4 border-b">
+                                    <a href="{{ route('projects.edit', $task->project) }}"
+                                        class="hover:bg-green-100 rounded py-1 px-2 w-full">
+                                        {{ $task->project->name }}
                                     </a>
                                 </td>
                                 <td class="py-2 px-4 border-b">{{ $task->created_at }}</td>

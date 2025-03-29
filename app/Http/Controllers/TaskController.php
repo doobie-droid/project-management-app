@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Project;
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -14,21 +15,19 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $projects = Project::all();
-        $tasks = Task::paginate(10);
-        return view('tasks.index', compact('tasks', 'projects'));
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $tasksQuery = Task::query();
+
+        if ($request->filled('project_id')) {
+            $tasksQuery->where('project_id', $request->project_id);
+        }
+
+        $tasks = $tasksQuery->paginate(10);
+
+        return view('tasks.index', compact('tasks', 'projects'));
     }
 
     /**
@@ -45,16 +44,6 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -76,7 +65,9 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        $task->update($request->validated());
+
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
     }
 
     /**
@@ -87,6 +78,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
     }
 }
