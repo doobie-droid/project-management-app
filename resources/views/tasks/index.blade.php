@@ -33,11 +33,13 @@
                 <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                     <thead>
                         <tr class="text-left">
+                            <th class="py-2 px-4 border-b"></th>
                             <th class="py-2 px-4 border-b">ID</th>
                             <th class="py-2 px-4 border-b">Name</th>
                             <th class="py-2 px-4 border-b">Task</th>
                             <th class="py-2 px-4 border-b">Created At</th>
-                            <th class="py-2 px-4 border-b">Updated At</th>
+
+                            <th class="py-2 px-4 border-b"></th>
                             <th class="py-2 px-4 border-b"></th>
                         </tr>
                     </thead>
@@ -45,6 +47,12 @@
                         @foreach ($tasks as $task)
                             <tr data-id="{{ $task->id }}" data-priority="{{ $task->priority }}"
                                 class="cursor-grab active:cursor-grabbing">
+                                <td class="py-2 px-2 border-b text-gray-500 align-middle">
+
+                                    <span class="block leading-tight text-lg select-none">
+                                        &#61;
+                                    </span>
+                                </td>
                                 <td class="py-2 px-4 border-b">{{ $task->id }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <a href="{{ route('tasks.edit', $task) }}"
@@ -59,7 +67,6 @@
                                     </a>
                                 </td>
                                 <td class="py-2 px-4 border-b">{{ $task->created_at }}</td>
-                                <td class="py-2 px-4 border-b">{{ $task->created_at }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <form action="{{ route('tasks.destroy', $task) }}" method="POST"
                                         onsubmit="return confirm('Send To Trash?');">
@@ -69,6 +76,12 @@
                                             Delete
                                         </button>
                                     </form>
+                                </td>
+                                <td class="py-2 px-2 border-b text-gray-500 align-middle">
+
+                                    <span class="block leading-tight text-lg select-none">
+                                        &#61;
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach

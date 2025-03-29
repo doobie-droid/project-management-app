@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect(route('tasks.index'));
+    return view('welcome');
 });
 Route::resource('projects', ProjectController::class)->except(['create', 'show']);
 Route::resource('tasks', TaskController::class)->except(['create', 'show']);
