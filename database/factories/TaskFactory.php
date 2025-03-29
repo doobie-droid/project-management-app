@@ -20,7 +20,6 @@ class TaskFactory extends Factory
         return [
             'name' => ucfirst($this->faker->word()),
             'project_id' => Project::factory()->create(),
-            'priority' => random_int(1, 100),
         ];
     }
 }
