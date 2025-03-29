@@ -6,9 +6,13 @@
         <div class="w-full sm:w-[80%] bg-gray-200 p-4 flex flex-col items-center">
             <div class="flex gap-4 justify-between items-center w-full">
 
-                <h1 class="text-2xl font-bold mb-4">Task List</h1>
+                <h1 class="text-2xl font-bold mb-4 text-green-400 hover:text-green-500 underline underline-offset-2"><a
+                        href="/">Home</a>
+                </h1>
+
                 <form method="GET" action="{{ route('tasks.index') }}" class="mb-4 place-items-end">
                     <div class="flex items-center gap-4">
+
                         <select name="project_id" id="project_id"
                             class="tom-select border-0 border-black border-b-2 bg-transparent focus:outline-none p-2">
                             <option value="">All Projects</option>
@@ -23,8 +27,10 @@
                         <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition">
                             Filter
                         </button>
+
                     </div>
                 </form>
+
             </div>
 
             @if ($tasks->isEmpty())
@@ -35,8 +41,8 @@
                         <tr class="text-left">
                             <th class="py-2 px-4 border-b"></th>
                             <th class="py-2 px-4 border-b">ID</th>
-                            <th class="py-2 px-4 border-b">Name</th>
-                            <th class="py-2 px-4 border-b">Task</th>
+                            <th class="py-2 px-4 border-b">Task Name</th>
+                            <th class="py-2 px-4 border-b">Project</th>
                             <th class="py-2 px-4 border-b">Created At</th>
 
                             <th class="py-2 px-4 border-b"></th>
