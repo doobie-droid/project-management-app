@@ -20,16 +20,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreProjectRequest  $request
@@ -42,16 +32,6 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Project  $project
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Project $project)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
