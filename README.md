@@ -10,6 +10,7 @@ Submission for Coalition assessment, includes CRUD application for managing task
 | PHP     | ^8.2.x  |
 | MYSQL   | ^5.7.x  |
 | Laravel | ^9.5.x  |
+| Node    | ^18     |
 
 ### LOCAL SETUP
 
@@ -38,13 +39,19 @@ php artisan key:generate
 php artisan migrate --seed && php artisan migrate  --env=testing
 ```
 
-6. You can then build tailwind css related assets by running
+7. Install javascript related dependencies i.e. tailwind, vite, etc
+
+```
+npm install
+```
+
+8. You can then build tailwind css related assets by running
 
 ```
 npm run build
 ```
 
-7. Spin up a local server by and visit the homepage: You will find a link to all tasks there
+9. Spin up a local server by and visit the homepage: You will find a link to all tasks there
 
 ```
 php artisan serve
