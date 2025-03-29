@@ -37,13 +37,14 @@
                             <th class="py-2 px-4 border-b">Name</th>
                             <th class="py-2 px-4 border-b">Task</th>
                             <th class="py-2 px-4 border-b">Created At</th>
-                            <th class="py-2 px-4 border-b">Updated At At</th>
+                            <th class="py-2 px-4 border-b">Updated At</th>
                             <th class="py-2 px-4 border-b"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="taskTableBody">
                         @foreach ($tasks as $task)
-                            <tr>
+                            <tr data-id="{{ $task->id }}" data-priority="{{ $task->priority }}"
+                                class="cursor-grab active:cursor-grabbing">
                                 <td class="py-2 px-4 border-b">{{ $task->id }}</td>
                                 <td class="py-2 px-4 border-b">
                                     <a href="{{ route('tasks.edit', $task) }}"
@@ -113,4 +114,46 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableBody = document.getElementById('taskTableBody');
+
+            new Sortable(tableBody, {
+                animation: 150,
+                onEnd: function(evt) {
+
+                    let order = [];
+                    const rows = Array.from(document.querySelectorAll('#taskTableBody tr'));
+                    const minPriority = Math.min(...rows.map(row => Number(row.dataset.priority)));
+                    order = rows.map((row, index) => ({
+                        id: row.dataset.id,
+                        priority: minPriority + index
+                    }));
+
+                    console.log(order);
+                    // Send updated positions to server via POST
+                    fetch("{{ route('tasks.reorder') }}", {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                order: order
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error updating task order:', error);
+                        });
+                }
+            });
+        });
+    </script>
 @endsection

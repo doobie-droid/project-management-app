@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Project;
 use App\Models\Task;
@@ -80,5 +81,16 @@ class TaskController extends Controller
     {
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
+    }
+
+    public function reorder(UpdateOrderRequest $request)
+    {
+        foreach ($request->order as $item) {
+            Task::where('id', $item['id'])->update([
+                'priority' => $item['priority']
+            ]);
+        }
+
+        return response()->json(['status' => 'success']);
     }
 }

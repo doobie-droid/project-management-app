@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
@@ -22,6 +23,13 @@ class Task extends Model implements Sortable
     ];
 
     use HasFactory;
+
+    protected static function booted()
+    {
+        static::addGlobalScope('ordered', function ($builder) {
+            $builder->ordered();
+        });
+    }
 
     public function project()
     {
