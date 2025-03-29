@@ -19,7 +19,4 @@ Route::get('/', function () {
     return redirect(route('tasks.index'));
 });
 Route::resource('projects', ProjectController::class)->except(['create', 'show']);
-
-Route::prefix('tasks')->name('tasks.')->group(function () {
-    Route::get('/', [TaskController::class, 'index'])->name('index');
-});
+Route::resource('tasks', TaskController::class)->except(['create', 'show']);
