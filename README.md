@@ -38,7 +38,13 @@ php artisan key:generate
 php artisan migrate --seed && php artisan migrate  --env=testing
 ```
 
-6. You can spin up a local server by and visit the homepage: You will find a link to all tasks there
+6. You can then build tailwind css related assets by running
+
+```
+npm run build
+```
+
+7. Spin up a local server by and visit the homepage: You will find a link to all tasks there
 
 ```
 php artisan serve
