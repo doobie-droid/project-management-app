@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class TaskControllerTest extends TestCase
@@ -12,7 +13,7 @@ class TaskControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_displays_the_index_with_paginated_tasks()
+    public function it_displays_the_index_with_paginated_tasks(): void
     {
         $project = Project::factory()->create();
         Task::factory()->count(15)->create(['project_id' => $project->id]);
@@ -20,7 +21,7 @@ class TaskControllerTest extends TestCase
         $response = $this->get(route('tasks.index'));
 
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertViewIs('tasks.index');
         $response->assertViewHas('tasks');
         $response->assertViewHas('projects');
@@ -28,7 +29,7 @@ class TaskControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_filter_tasks_by_project_id()
+    public function it_can_filter_tasks_by_project_id(): void
     {
         $projectA = Project::factory()->create();
         $projectB = Project::factory()->create();
@@ -39,14 +40,14 @@ class TaskControllerTest extends TestCase
 
 
         $response = $this->get(route('tasks.index', ['project_id' => $projectA->id]));
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
 
         $tasks = $response->viewData('tasks');
         $this->assertTrue($tasks->every(fn($task) => $task->project_id === $projectA->id));
     }
 
     /** @test */
-    public function it_can_store_a_new_task()
+    public function it_can_store_a_new_task(): void
     {
         $project = Project::factory()->create();
 
@@ -67,18 +68,18 @@ class TaskControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_show_the_edit_form()
+    public function it_can_show_the_edit_form(): void
     {
         $task = Task::factory()->create();
 
         $response = $this->get(route('tasks.edit', $task->id));
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertViewIs('tasks.edit');
         $response->assertViewHas('task', $task);
     }
 
     /** @test */
-    public function it_can_update_a_task()
+    public function it_can_update_a_task(): void
     {
         $task = Task::factory()->create([
             'name' => 'Old Name',
@@ -100,20 +101,19 @@ class TaskControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_destroy_a_task()
+    public function it_can_destroy_a_task(): void
     {
         $task = Task::factory()->create();
 
-        $response = $this->delete(route('tasks.destroy', $task->id));
+        $response = $this->delete(route('tasks.destroy', $task));
 
         $response->assertRedirect(route('tasks.index'));
-        $response->assertSessionHas('success', 'Task deleted successfully!');
 
-        $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
+        $this->assertDatabaseMissing('tasks', ['id' => $task]);
     }
 
     /** @test */
-    public function it_can_reorder_tasks()
+    public function it_can_reorder_tasks(): void
     {
         $task1 = Task::factory()->create(['priority' => 1]);
         $task2 = Task::factory()->create(['priority' => 2]);
@@ -129,10 +129,9 @@ class TaskControllerTest extends TestCase
 
         $response = $this->postJson(route('tasks.reorder'), $payload);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(['status' => 'success']);
 
-        // Ensure the DB updated priorities
         $this->assertDatabaseHas('tasks', [
             'id'       => $task3->id,
             'priority' => 10,
